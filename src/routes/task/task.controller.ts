@@ -26,14 +26,29 @@ export function list(req: Request, res: Response) {
 }
 
 export function create(req: Request, res: Response) {
-    const data: Task = req.body.data;
-    const newTask = {
-        task: data.task,
-        desc: data.desc,
-        completed: data.completed,
-    };
+    if (Array.isArray(req.body.data)) {
+        const data: Task[] = req.body.data;
 
-    arr.push(newTask);
+        data.forEach((e) => {
+            const newTask = {
+                task: e.task,
+                completed: e.completed,
+            };
+            console.log(e);
+            arr.push(newTask);
+        });
 
-    res.status(201).json({ data: newTask });
+        res.status(201).json([...data]);
+    } else {
+        const data: Task = req.body.data;
+        const newTask = {
+            task: data.task,
+            desc: data.desc,
+            completed: data.completed,
+        };
+
+        arr.push(newTask);
+
+        res.status(201).json({ data: newTask });
+    }
 }
