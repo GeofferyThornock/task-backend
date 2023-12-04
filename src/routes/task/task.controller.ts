@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 interface Task {
     task: string;
     desc?: string;
+    priority?: number;
     completed: boolean;
 }
 
@@ -44,6 +45,7 @@ export function create(req: Request, res: Response) {
         const newTask = {
             task: data.task,
             desc: data.desc,
+            priority: data.priority,
             completed: data.completed,
         };
 
